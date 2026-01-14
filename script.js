@@ -82,3 +82,19 @@ const counterObserver = new IntersectionObserver(entries => {
 });
 
 counters.forEach(counter => counterObserver.observe(counter));
+
+const trustBadges = document.querySelectorAll('.trust-badge');
+
+const trustObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate');
+    } else {
+      entry.target.classList.remove('animate');
+    }
+  });
+}, {
+  threshold: 0.6
+});
+
+trustBadges.forEach(badge => trustObserver.observe(badge));
