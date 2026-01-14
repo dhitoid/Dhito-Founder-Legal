@@ -195,3 +195,37 @@ if (reveals.length) {
   }
 
 });
+
+/* ==================================================
+   SCROLL VELOCITY ENGINE
+================================================== */
+let lastScrollY = window.scrollY;
+let lastTime = performance.now();
+let scrollVelocity = 0;
+
+window.addEventListener('scroll', () => {
+  const now = performance.now();
+  const deltaY = Math.abs(window.scrollY - lastScrollY);
+  const deltaTime = now - lastTime || 16;
+
+  scrollVelocity = deltaY / deltaTime;
+
+  // clamp agar tidak liar
+  scrollVelocity = Math.min(scrollVelocity, 1.5);
+
+  // mapping velocity → animasi
+  const distance = 24 + scrollVelocity * 30; // px
+  const duration = 0.45 + (1.2 - scrollVelocity) * 0.25; // sec
+
+  document.documentElement.style.setProperty(
+    '--reveal-distance',
+    `${distance}px`
+  );
+  document.documentElement.style.setProperty(
+    '--reveal-duration',
+    `${duration}s`
+  );
+
+  lastScrollY = window.scrollY;
+  lastTime = now;
+});
