@@ -128,49 +128,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
-  /* ==================================================
-     🔥 COUNTER ANIMATION (FIXED)
-  ================================================== */
-  const counters = document.querySelectorAll('.count');
+/* ==================================================
+   COUNTER ANIMATION (FORMAT %, +, REPEATABLE)
+================================================== */
+const counters = document.querySelectorAll('.count');
 
-  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
 
-  const animateCounter = (el, target, duration = 1400) => {
-    let startTime = null;
+const animateCounter = (el, target, suffix = '', duration = 1400) => {
+  let startTime = null;
 
-    const animate = time => {
-      if (!startTime) startTime = time;
-      const progress = Math.min((time - startTime) / duration, 1);
-      const eased = easeOutCubic(progress);
+  const animate = time => {
+    if (!startTime) startTime = time;
+    const progress = Math.min((time - startTime) / duration, 1);
+    const eased = easeOutCubic(progress);
 
-      el.textContent = Math.floor(eased * target);
+    el.textContent = Math.floor(eased * target) + suffix;
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        el.textContent = target + '+';
-      }
-    };
-
-    requestAnimationFrame(animate);
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      el.textContent = target + suffix;
+    }
   };
 
-  if (counters.length) {
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const el = entry.target;
-        const target = parseInt(el.dataset.target, 10);
+  requestAnimationFrame(animate);
+};
 
-        if (entry.isIntersecting) {
-          el.textContent = '0';
-          animateCounter(el, target);
-        } else {
-          el.textContent = '0';
-        }
-      });
-    }, { threshold: 0.6 });
+if (counters.length) {
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target, 10);
+      const suffix = el.dataset.suffix || '';
 
-    counters.forEach(counter => counterObserver.observe(counter));
-  }
+      if (entry.isIntersecting) {
+        // Reset sebelum animasi (agar bisa replay)
+        el.textContent = '0' + suffix;
 
-});
+        // Delay kecil agar sinkron dengan reveal
+        setTimeout(() => {
+          animateCounter(el, target, suffix);
+        }, 120);
+      } else {
+        el.textContent = '0' + suffix;
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(counter => counterObserver.observe(counter));
+}
