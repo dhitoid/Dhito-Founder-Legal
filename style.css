@@ -612,6 +612,25 @@ footer {
   animation: ripple-ios .55s cubic-bezier(.4,0,.2,1);
 }
 
+/* ==================================================
+   DYNAMIC CTA TEXT
+================================================== */
+
+.bottom-cta-text {
+  transition: opacity .35s cubic-bezier(.4,0,.2,1),
+              transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+.bottom-cta-text.fade-out {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.bottom-cta-text.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* HIDE ON DESKTOP */
 @media(min-width: 769px){
   .bottom-cta { display: none; }
