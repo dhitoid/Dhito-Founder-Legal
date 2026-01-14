@@ -312,18 +312,31 @@ footer {
   box-shadow: var(--shadow-md);
 }
 
-/* ==================================================
-   REVEAL
-================================================== */
+/* =====================================
+   REVEAL BASE
+===================================== */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(32px);
+  will-change: transform, opacity;
 }
 
-.reveal.active {
+/* SCROLL DOWN */
+.reveal.active-down {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.6s ease;
+  transition: 
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(.22,.61,.36,1);
+}
+
+/* SCROLL UP */
+.reveal.active-up {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(.4,0,.2,1);
 }
 
 /* ==================================================
