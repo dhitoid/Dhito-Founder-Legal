@@ -613,6 +613,25 @@ footer {
 }
 
 /* ==================================================
+   AUTO HIDE / SHOW BOTTOM CTA
+================================================== */
+
+.bottom-cta {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform .45s cubic-bezier(.4,0,.2,1),
+    opacity .35s cubic-bezier(.4,0,.2,1);
+}
+
+.bottom-cta.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==================================================
    DYNAMIC CTA TEXT
 ================================================== */
 
