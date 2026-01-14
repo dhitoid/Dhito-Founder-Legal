@@ -37,6 +37,26 @@ window.addEventListener('scroll', () => {
   }
 });
 
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.bottom-cta-btn');
+  if (!btn) return;
+
+  const rect = btn.getBoundingClientRect();
+  const ripple = document.createElement('span');
+
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height =
+    Math.max(rect.width, rect.height) + 'px';
+
+  ripple.style.left = e.clientX - rect.left - rect.width / 2 + 'px';
+  ripple.style.top  = e.clientY - rect.top  - rect.height / 2 + 'px';
+
+  btn.appendChild(ripple);
+
+  setTimeout(() => ripple.remove(), 600);
+});
+
+
 const counters = document.querySelectorAll('.count');
 
 const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
