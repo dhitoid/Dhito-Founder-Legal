@@ -38,40 +38,47 @@ window.addEventListener('scroll', () => {
 });
 
 const counters = document.querySelectorAll('.count');
-let counterStarted = false;
 
-const startCount = () => {
-  counters.forEach(counter => {
-    const target = +counter.dataset.target;
-    const speed = 200; // makin kecil makin cepat
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
 
-    const updateCount = () => {
-      const current = +counter.innerText;
-      const increment = Math.ceil(target / speed);
+const animateCounter = (el, target, duration = 1400) => {
+  let start = 0;
+  let startTime = null;
 
-      if (current < target) {
-        counter.innerText = current + increment;
-        setTimeout(updateCount, 20);
-      } else {
-        counter.innerText = target + '+';
-      }
-    };
+  const animate = time => {
+    if (!startTime) startTime = time;
+    const progress = Math.min((time - startTime) / duration, 1);
+    const eased = easeOutCubic(progress);
 
-    updateCount();
-  });
+    el.textContent = Math.floor(eased * target);
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      el.textContent = target + '+';
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
+
+const resetCounter = el => {
+  el.textContent = '0';
 };
 
 const counterObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting && !counterStarted) {
-      counterStarted = true;
-      startCount();
+    const counter = entry.target;
+    const target = +counter.dataset.target;
+
+    if (entry.isIntersecting) {
+      animateCounter(counter, target);
+    } else {
+      resetCounter(counter);
     }
   });
-}, { threshold: 0.4 });
-
-document.querySelectorAll('.stats').forEach(stat => {
-  counterObserver.observe(stat);
+}, {
+  threshold: 0.6
 });
 
-
+counters.forEach(counter => counterObserver.observe(counter));
