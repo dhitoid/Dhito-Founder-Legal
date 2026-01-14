@@ -37,3 +37,41 @@ window.addEventListener('scroll', () => {
   }
 });
 
+const counters = document.querySelectorAll('.count');
+let counterStarted = false;
+
+const startCount = () => {
+  counters.forEach(counter => {
+    const target = +counter.dataset.target;
+    const speed = 200; // makin kecil makin cepat
+
+    const updateCount = () => {
+      const current = +counter.innerText;
+      const increment = Math.ceil(target / speed);
+
+      if (current < target) {
+        counter.innerText = current + increment;
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target + '+';
+      }
+    };
+
+    updateCount();
+  });
+};
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !counterStarted) {
+      counterStarted = true;
+      startCount();
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.stats').forEach(stat => {
+  counterObserver.observe(stat);
+});
+
+
