@@ -1,38 +1,52 @@
 :root {
-  --dark: #020617;
-  --primary: #2563eb;
+  --bg-main: #ffffff;
+  --bg-soft: #f9fafb;
+  --bg-dark: #020617;
+
+  --primary: #1d4ed8;
+  --primary-soft: #e0e7ff;
   --accent: #22c55e;
-  --muted: #94a3b8;
-  --bg-soft: #f8fafc;
-  --glass: rgba(255,255,255,0.08);
+
+  --text-main: #020617;
+  --text-soft: #64748b;
+
+  --radius: 18px;
+  --radius-lg: 28px;
+
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.06);
+  --shadow-strong: 0 30px 70px rgba(0,0,0,.12);
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Inter', system-ui, sans-serif;
+}
+
+html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
-  color: var(--dark);
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.7;
 }
 
-/* NAV */
+/* ================= NAV ================= */
 header {
   position: sticky;
   top: 0;
   z-index: 999;
-  backdrop-filter: blur(14px);
-  background: rgba(2,6,23,0.75);
+  background: rgba(2,6,23,.85);
+  backdrop-filter: blur(16px);
 }
 
 .nav {
   max-width: 1200px;
   margin: auto;
-  padding: 16px 24px;
+  padding: 18px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,44 +54,49 @@ header {
 
 .logo {
   color: white;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: .5px;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 .btn {
-  padding: 14px 26px;
+  padding: 14px 30px;
   border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
   background: linear-gradient(135deg, var(--accent), #16a34a);
   color: white;
+  text-decoration: none;
+  font-weight: 600;
   transition: all .35s ease;
-  box-shadow: 0 10px 30px rgba(34,197,94,.35);
+  box-shadow: 0 15px 35px rgba(34,197,94,.35);
 }
 
 .btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(34,197,94,.45);
+  transform: translateY(-3px);
+  box-shadow: 0 25px 60px rgba(34,197,94,.5);
 }
 
-/* HERO */
+.btn:active {
+  transform: scale(.97);
+}
+
+/* ================= HERO ================= */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white;
   background:
-    radial-gradient(circle at top, #2563eb, transparent 60%),
+    radial-gradient(circle at top, #1d4ed8, transparent 55%),
     linear-gradient(180deg, #020617, #020617);
+  color: white;
 }
 
 .hero h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  margin-bottom: 16px;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 900;
+  margin-bottom: 20px;
 }
 
 .hero span {
@@ -87,85 +106,105 @@ header {
 }
 
 .hero p {
-  max-width: 680px;
+  max-width: 720px;
   margin: auto;
-  color: #cbd5f5;
-  font-size: 1.1rem;
+  color: #c7d2fe;
+  font-size: 1.15rem;
 }
 
-/* SECTION */
+/* ================= SECTION ================= */
 .container {
   max-width: 1200px;
   margin: auto;
-  padding: 90px 24px;
+  padding: 100px 24px;
 }
 
 h3 {
-  font-size: 2.2rem;
-  margin-bottom: 25px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 20px;
 }
 
-/* GLASS CARD */
+section p {
+  color: var(--text-soft);
+  font-size: 1.05rem;
+}
+
+/* ================= GRID & CARD ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
 .card {
-  background: linear-gradient(180deg, #ffffff, #f1f5f9);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 25px 50px rgba(0,0,0,.08);
+  background: white;
+  padding: 36px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
   transition: all .4s ease;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 40px 80px rgba(0,0,0,.12);
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-strong);
 }
 
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-  gap: 30px;
+/* ================= TRUST ================= */
+.trust {
+  background: var(--bg-soft);
+  text-align: center;
 }
 
-/* WHY */
+.trust p {
+  font-weight: 600;
+  letter-spacing: .4px;
+}
+
+/* ================= WHY ================= */
 .why ul {
   list-style: none;
+  margin-top: 30px;
 }
 
 .why li {
-  margin: 14px 0;
+  margin-bottom: 14px;
   font-weight: 500;
 }
 
-/* FAQ */
+/* ================= FAQ ================= */
 details {
-  margin-bottom: 15px;
   background: white;
-  padding: 18px 22px;
-  border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(0,0,0,.05);
+  padding: 22px 26px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
 }
 
-/* CTA */
+/* ================= CTA ================= */
 .cta {
   background: linear-gradient(135deg, var(--primary), #1e40af);
   color: white;
-  border-radius: 40px;
-  margin: 60px auto;
-  max-width: 1100px;
-}
-
-/* FOOTER */
-footer {
-  background: #020617;
-  color: var(--muted);
+  border-radius: var(--radius-lg);
   text-align: center;
-  padding: 40px;
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 90px 30px;
 }
 
-/* ANIMATION */
+/* ================= FOOTER ================= */
+footer {
+  background: var(--bg-dark);
+  color: #94a3b8;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+/* ================= ANIMATION ================= */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(50px);
   transition: all .9s cubic-bezier(.4,0,.2,1);
 }
 
@@ -174,13 +213,29 @@ footer {
   transform: translateY(0);
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
-  .hero {
-    padding: 60px 20px;
-  }
-  h3 {
-    font-size: 1.8rem;
-  }
+/* ================= FLOATING WA ================= */
+.whatsapp {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #22c55e;
+  color: white;
+  padding: 16px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 20px 50px rgba(34,197,94,.5);
+  transition: all .3s ease;
+  z-index: 999;
 }
 
+.whatsapp:hover {
+  transform: scale(1.08);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  h3 {
+    font-size: 2rem;
+  }
+}
