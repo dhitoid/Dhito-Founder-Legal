@@ -337,28 +337,22 @@ footer {
 }
 
 /* ==================================================
-   BOTTOM BAR CTA — iOS STYLE
+   BOTTOM BAR CTA — iOS STYLE 2026
 ================================================== */
-.bottom-cta {
+.bottom-bar {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: -100%;
-  z-index: 9999;
-  padding: 12px 14px env(safe-area-inset-bottom);
-  background: rgba(255,255,255,.88);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-top: 1px solid rgba(0,0,0,.08);
-  transition: bottom .45s cubic-bezier(.4,0,.2,1);
-}
-
-/* ACTIVE */
-.bottom-cta.show {
   bottom: 0;
+  z-index: 999;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-soft);
+  padding: 10px 14px env(safe-area-inset-bottom);
 }
 
-.bottom-cta-inner {
-  max-width: 1200px;
+.bottom-inner {
+  max-width: 1100px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -366,38 +360,53 @@ footer {
   gap: 14px;
 }
 
-.bottom-cta-text {
+/* TRUST */
+.trust {
   display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.bottom-cta-text strong {
-  font-size: .95rem;
-  font-weight: 600;
-}
-
-.bottom-cta-text span {
-  font-size: .75rem;
+  align-items: center;
+  gap: 6px;
+  font-size: .85rem;
   color: var(--text-soft);
 }
 
-/* BUTTON */
-.bottom-cta-btn {
-  background: var(--primary);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: .85rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+.trust strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
-.bottom-cta-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+/* LIVE DOT */
+.trust-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 rgba(34,197,94,.7);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+  70% { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+/* CTA BUTTON */
+.cta-btn {
+  padding: 12px 22px;
+  font-size: .9rem;
+}
+
+/* SPACE FIX */
+body {
+  padding-bottom: 80px;
+}
+
+/* MOBILE */
+@media(max-width: 768px) {
+  .trust-text {
+    display: none;
+  }
 }
 
 /* ==================================================
