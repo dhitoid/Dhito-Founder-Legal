@@ -4,23 +4,32 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 /* ==================================================
-   REVEAL ON SCROLL (REPLAYABLE)
+   REVEAL ON SCROLL (UP vs DOWN)
 ================================================== */
 const reveals = document.querySelectorAll('.reveal');
+let lastScrollY = window.scrollY;
 
 if (reveals.length) {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       const el = entry.target;
+      const currentScrollY = window.scrollY;
+      const direction = currentScrollY > lastScrollY ? 'down' : 'up';
 
       if (entry.isIntersecting) {
-        // Reset animation dulu
-        el.classList.remove('active');
-        void el.offsetWidth; // force reflow
-        el.classList.add('active');
+        // reset dulu agar animasi replay
+        el.classList.remove('active-down', 'active-up');
+        void el.offsetWidth;
+
+        el.classList.add(
+          direction === 'down' ? 'active-down' : 'active-up'
+        );
       } else {
-        el.classList.remove('active');
+        // keluar viewport → reset
+        el.classList.remove('active-down', 'active-up');
       }
+
+      lastScrollY = currentScrollY;
     });
   }, {
     threshold: 0.2
