@@ -1,29 +1,26 @@
 /* ==================================================
-   DESIGN TOKENS (APPLE CLEAN DIGITAL)
+   DESIGN TOKENS
 ================================================== */
 :root {
   --bg-main: #ffffff;
   --bg-soft: #f5f5f7;
 
   --primary: #0071e3;
-  --primary-soft: #e8f1fd;
-
   --text-main: #1d1d1f;
   --text-soft: #6e6e73;
   --border-soft: #e5e5ea;
 
-  --radius-sm: 12px;
-  --radius: 16px;
-  --radius-lg: 28px;
+  --radius: 14px;
+  --radius-lg: 24px;
 
-  --shadow-soft: 0 4px 16px rgba(0,0,0,.06);
-  --shadow-hover: 0 12px 40px rgba(0,0,0,.12);
+  --shadow-soft: 0 4px 14px rgba(0,0,0,.06);
+  --shadow-hover: 0 10px 30px rgba(0,0,0,.12);
 
   --ease: cubic-bezier(.4,0,.2,1);
 }
 
 /* ==================================================
-   RESET & BASE
+   RESET
 ================================================== */
 * {
   margin: 0;
@@ -32,84 +29,80 @@
   font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg-main);
   color: var(--text-main);
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 /* ==================================================
-   TYPOGRAPHY
+   TYPO
 ================================================== */
-h1, h2, h3, h4 {
+h1, h2, h3 {
   font-weight: 700;
   letter-spacing: -0.015em;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  margin-bottom: 18px;
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  margin-bottom: 12px;
 }
 
 h3 {
-  font-size: 2rem;
-  margin-bottom: 14px;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
 }
 
 p {
   color: var(--text-soft);
-  font-size: 1rem;
+  font-size: .95rem;
 }
 
 /* ==================================================
-   NAVIGATION
+   NAV
 ================================================== */
 header {
   position: sticky;
   top: 0;
   z-index: 999;
-  background: rgba(255,255,255,.82);
-  backdrop-filter: saturate(180%) blur(18px);
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border-soft);
 }
 
 .nav {
   max-width: 1200px;
   margin: auto;
-  padding: 16px 24px;
+  padding: 14px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .logo {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
 }
 
 /* ==================================================
-   BUTTON (MICRO INTERACTION)
+   BUTTON + RIPPLE BASE
 ================================================== */
 .btn {
   position: relative;
-  padding: 12px 28px;
+  overflow: hidden;
+  padding: 11px 26px;
   border-radius: 999px;
   background: var(--primary);
   color: white;
   font-weight: 600;
   text-decoration: none;
-  transition: 
-    transform .25s var(--ease),
-    box-shadow .25s var(--ease),
-    background .25s var(--ease);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-soft);
 }
 
@@ -117,11 +110,28 @@ header {
   transform: scale(.96);
 }
 
+/* RIPPLE */
+.btn span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255,255,255,.35);
+  animation: ripple .6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
 /* ==================================================
-   HERO
+   HERO (COMPACT)
 ================================================== */
 .hero {
-  min-height: 90vh;
+  min-height: 75vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,8 +139,8 @@ header {
 }
 
 .hero-inner {
-  max-width: 840px;
-  padding: 40px;
+  max-width: 820px;
+  padding: 24px;
 }
 
 .hero span {
@@ -138,30 +148,17 @@ header {
 }
 
 .hero p {
-  margin-top: 14px;
-  font-size: 1.05rem;
+  margin: 10px auto 18px;
+  font-size: 1rem;
 }
 
 /* ==================================================
-   BADGE
-================================================== */
-.badge {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 999px;
-  background: var(--bg-soft);
-  color: var(--text-soft);
-  font-size: .85rem;
-  margin-bottom: 26px;
-}
-
-/* ==================================================
-   SECTION
+   SECTION (PADAT)
 ================================================== */
 .container {
   max-width: 1200px;
   margin: auto;
-  padding: 110px 24px;
+  padding: 70px 22px;
 }
 
 .services,
@@ -170,42 +167,26 @@ header {
 }
 
 /* ==================================================
-   GRID
+   GRID & CARD
 ================================================== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 28px;
-  margin-top: 48px;
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap: 22px;
+  margin-top: 28px;
 }
 
-/* ==================================================
-   CARD (MICRO INTERACTION)
-================================================== */
 .card {
   background: white;
-  padding: 40px;
+  padding: 26px;
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
-  transition:
-    transform .35s var(--ease),
-    box-shadow .35s var(--ease),
-    border .35s var(--ease);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-  border-color: transparent;
-}
-
-.card h4 {
-  font-size: 1.15rem;
-  margin-bottom: 8px;
-}
-
-.card p {
-  font-size: .95rem;
 }
 
 /* ==================================================
@@ -213,28 +194,23 @@ header {
 ================================================== */
 .why ul {
   list-style: none;
-  margin-top: 28px;
+  margin-top: 18px;
 }
 
 .why li {
-  margin-bottom: 12px;
-  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: .95rem;
 }
 
 /* ==================================================
-   FAQ (DETAILS INTERACTION)
+   FAQ
 ================================================== */
 details {
   background: white;
-  padding: 22px 26px;
+  padding: 18px 22px;
   border-radius: var(--radius);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   border: 1px solid var(--border-soft);
-  transition: box-shadow .3s var(--ease);
-}
-
-details[open] {
-  box-shadow: var(--shadow-soft);
 }
 
 summary {
@@ -243,15 +219,15 @@ summary {
 }
 
 /* ==================================================
-   CTA
+   CTA (RINGKAS & KUAT)
 ================================================== */
 .cta {
   background: var(--bg-soft);
   border-radius: var(--radius-lg);
   text-align: center;
-  max-width: 1100px;
-  margin: 90px auto;
-  padding: 90px 30px;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 60px 24px;
 }
 
 /* ==================================================
@@ -261,19 +237,17 @@ footer {
   background: var(--bg-soft);
   color: var(--text-soft);
   text-align: center;
-  padding: 50px 20px;
+  padding: 30px 16px;
   border-top: 1px solid var(--border-soft);
 }
 
 /* ==================================================
-   REVEAL ANIMATION
+   REVEAL
 ================================================== */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: 
-    opacity .8s var(--ease),
-    transform .8s var(--ease);
+  transform: translateY(30px);
+  transition: .6s var(--ease);
 }
 
 .reveal.active {
@@ -282,34 +256,9 @@ footer {
 }
 
 /* ==================================================
-   FLOATING WHATSAPP
-================================================== */
-.whatsapp {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  background: var(--primary);
-  color: white;
-  padding: 14px 22px;
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: var(--shadow-soft);
-  transition:
-    transform .25s var(--ease),
-    box-shadow .25s var(--ease);
-}
-
-.whatsapp:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-}
-
-/* ==================================================
    MOBILE
 ================================================== */
-@media (max-width: 768px) {
-  h2 { font-size: 1.9rem; }
-  h3 { font-size: 1.7rem; }
-  .container { padding: 80px 20px; }
+@media(max-width:768px){
+  .container { padding: 60px 18px; }
+  h2 { font-size: 1.8rem; }
 }
