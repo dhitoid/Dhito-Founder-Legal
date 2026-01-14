@@ -772,11 +772,15 @@ footer {
     transform calc(var(--reveal-duration) * 0.85) cubic-bezier(.4,0,.2,1);
 }
 
+/* =====================================
+   GLASS SECTION
+===================================== */
 .section-glass {
-  background: rgba(255,255,255,.7);
-  backdrop-filter: blur(22px) saturate(160%);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-soft);
+  position: relative;
+  background: rgba(255,255,255,.65);
+  backdrop-filter: blur(22px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,.5);
+  border-bottom: 1px solid rgba(0,0,0,.04);
 }
 
 /* DESKTOP HIDE */
