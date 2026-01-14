@@ -153,3 +153,30 @@ function rotateCTA() {
 }
 
 setInterval(rotateCTA, 4500);
+
+const bottomCta = document.getElementById('bottomCta');
+let lastScroll = 0;
+const showAfter = 200; // px setelah hero
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+
+  // Jangan tampil di atas / hero
+  if (currentScroll < showAfter) {
+    bottomCta.classList.remove('show');
+    lastScroll = currentScroll;
+    return;
+  }
+
+  // Scroll ke bawah → tampil
+  if (currentScroll > lastScroll + 10) {
+    bottomCta.classList.add('show');
+  }
+
+  // Scroll ke atas → sembunyi
+  if (currentScroll < lastScroll - 10) {
+    bottomCta.classList.remove('show');
+  }
+
+  lastScroll = currentScroll;
+});
