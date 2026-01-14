@@ -24,3 +24,16 @@ document.querySelectorAll('.btn').forEach(button => {
     setTimeout(() => ripple.remove(), 600);
   });
 });
+
+const bottomCta = document.getElementById('bottomCta');
+
+window.addEventListener('scroll', () => {
+  const scrollTrigger = window.innerHeight * 0.6;
+
+  if (window.scrollY > scrollTrigger) {
+    bottomCta.classList.add('show');
+  } else {
+    bottomCta.classList.remove('show');
+  }
+});
+
