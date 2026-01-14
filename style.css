@@ -650,6 +650,33 @@ footer {
   transform: translateY(0);
 }
 
+/* ==================================================
+   MINI TESTIMONIAL
+================================================== */
+
+.mini-testimonial {
+  margin-top: 4px;
+  font-size: .75rem;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  transition:
+    opacity .35s cubic-bezier(.4,0,.2,1),
+    transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+.mini-testimonial.fade-out {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.mini-testimonial.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* HIDE ON DESKTOP */
 @media(min-width: 769px){
   .bottom-cta { display: none; }
