@@ -1,18 +1,30 @@
+/* ==================================================
+   DESIGN TOKENS (APPLE CLEAN DIGITAL)
+================================================== */
 :root {
   --bg-main: #ffffff;
   --bg-soft: #f5f5f7;
 
   --primary: #0071e3;
+  --primary-soft: #e8f1fd;
+
   --text-main: #1d1d1f;
   --text-soft: #6e6e73;
   --border-soft: #e5e5ea;
 
+  --radius-sm: 12px;
   --radius: 16px;
   --radius-lg: 28px;
 
-  --shadow-soft: 0 4px 20px rgba(0,0,0,.06);
+  --shadow-soft: 0 4px 16px rgba(0,0,0,.06);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,.12);
+
+  --ease: cubic-bezier(.4,0,.2,1);
 }
 
+/* ==================================================
+   RESET & BASE
+================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -30,15 +42,22 @@ body {
   line-height: 1.65;
 }
 
-/* ================= TYPO ================= */
+/* ==================================================
+   TYPOGRAPHY
+================================================== */
 h1, h2, h3, h4 {
   font-weight: 700;
   letter-spacing: -0.015em;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 2.4rem);
+  font-size: clamp(2rem, 4vw, 2.5rem);
   margin-bottom: 18px;
+}
+
+h3 {
+  font-size: 2rem;
+  margin-bottom: 14px;
 }
 
 p {
@@ -46,13 +65,9 @@ p {
   font-size: 1rem;
 }
 
-.center-text {
-  text-align: center;
-  max-width: 760px;
-  margin: auto;
-}
-
-/* ================= NAV ================= */
+/* ==================================================
+   NAVIGATION
+================================================== */
 header {
   position: sticky;
   top: 0;
@@ -76,23 +91,35 @@ header {
   font-weight: 700;
 }
 
-/* ================= BUTTON ================= */
+/* ==================================================
+   BUTTON (MICRO INTERACTION)
+================================================== */
 .btn {
+  position: relative;
   padding: 12px 28px;
   border-radius: 999px;
   background: var(--primary);
   color: white;
   font-weight: 600;
   text-decoration: none;
-  transition: .25s ease;
+  transition: 
+    transform .25s var(--ease),
+    box-shadow .25s var(--ease),
+    background .25s var(--ease);
 }
 
 .btn:hover {
-  opacity: .85;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
 }
 
-/* ================= HERO ================= */
+.btn:active {
+  transform: scale(.96);
+}
+
+/* ==================================================
+   HERO
+================================================== */
 .hero {
   min-height: 90vh;
   display: flex;
@@ -102,7 +129,7 @@ header {
 }
 
 .hero-inner {
-  max-width: 820px;
+  max-width: 840px;
   padding: 40px;
 }
 
@@ -111,11 +138,13 @@ header {
 }
 
 .hero p {
-  font-size: 1.05rem;
   margin-top: 14px;
+  font-size: 1.05rem;
 }
 
-/* ================= BADGE ================= */
+/* ==================================================
+   BADGE
+================================================== */
 .badge {
   display: inline-block;
   padding: 6px 16px;
@@ -126,7 +155,9 @@ header {
   margin-bottom: 26px;
 }
 
-/* ================= SECTION ================= */
+/* ==================================================
+   SECTION
+================================================== */
 .container {
   max-width: 1200px;
   margin: auto;
@@ -138,7 +169,9 @@ header {
   background: var(--bg-soft);
 }
 
-/* ================= GRID ================= */
+/* ==================================================
+   GRID
+================================================== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
@@ -146,13 +179,24 @@ header {
   margin-top: 48px;
 }
 
-/* ================= CARD ================= */
+/* ==================================================
+   CARD (MICRO INTERACTION)
+================================================== */
 .card {
   background: white;
   padding: 40px;
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
-  transition: .3s ease;
+  transition:
+    transform .35s var(--ease),
+    box-shadow .35s var(--ease),
+    border .35s var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: transparent;
 }
 
 .card h4 {
@@ -164,12 +208,9 @@ header {
   font-size: .95rem;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-soft);
-}
-
-/* ================= WHY ================= */
+/* ==================================================
+   WHY
+================================================== */
 .why ul {
   list-style: none;
   margin-top: 28px;
@@ -180,16 +221,30 @@ header {
   font-weight: 500;
 }
 
-/* ================= FAQ ================= */
+/* ==================================================
+   FAQ (DETAILS INTERACTION)
+================================================== */
 details {
   background: white;
   padding: 22px 26px;
   border-radius: var(--radius);
   margin-bottom: 14px;
   border: 1px solid var(--border-soft);
+  transition: box-shadow .3s var(--ease);
 }
 
-/* ================= CTA ================= */
+details[open] {
+  box-shadow: var(--shadow-soft);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ==================================================
+   CTA
+================================================== */
 .cta {
   background: var(--bg-soft);
   border-radius: var(--radius-lg);
@@ -199,7 +254,9 @@ details {
   padding: 90px 30px;
 }
 
-/* ================= FOOTER ================= */
+/* ==================================================
+   FOOTER
+================================================== */
 footer {
   background: var(--bg-soft);
   color: var(--text-soft);
@@ -208,17 +265,15 @@ footer {
   border-top: 1px solid var(--border-soft);
 }
 
-/* ================= DIVIDER ================= */
-.section-divider {
-  height: 1px;
-  background: var(--border-soft);
-}
-
-/* ================= ANIMATION ================= */
+/* ==================================================
+   REVEAL ANIMATION
+================================================== */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: .8s ease;
+  transition: 
+    opacity .8s var(--ease),
+    transform .8s var(--ease);
 }
 
 .reveal.active {
@@ -226,7 +281,9 @@ footer {
   transform: translateY(0);
 }
 
-/* ================= FLOATING WA ================= */
+/* ==================================================
+   FLOATING WHATSAPP
+================================================== */
 .whatsapp {
   position: fixed;
   right: 22px;
@@ -237,16 +294,22 @@ footer {
   border-radius: 999px;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
-  transition: .25s;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform .25s var(--ease),
+    box-shadow .25s var(--ease);
 }
 
 .whatsapp:hover {
-  opacity: .85;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
 
-/* ================= MOBILE ================= */
-@media(max-width:768px){
+/* ==================================================
+   MOBILE
+================================================== */
+@media (max-width: 768px) {
   h2 { font-size: 1.9rem; }
+  h3 { font-size: 1.7rem; }
   .container { padding: 80px 20px; }
 }
