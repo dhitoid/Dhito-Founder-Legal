@@ -692,6 +692,39 @@ footer {
   transform: translateY(0);
 }
 
+/* =====================================
+   VELOCITY VARIABLES
+===================================== */
+:root {
+  --reveal-distance: 32px;
+  --reveal-duration: 0.6s;
+}
+
+/* BASE */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  will-change: transform, opacity;
+}
+
+/* DOWN */
+.reveal.active-down {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--reveal-duration) ease,
+    transform var(--reveal-duration) cubic-bezier(.22,.61,.36,1);
+}
+
+/* UP */
+.reveal.active-up {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity calc(var(--reveal-duration) * 0.85) ease,
+    transform calc(var(--reveal-duration) * 0.85) cubic-bezier(.4,0,.2,1);
+}
+
 /* DESKTOP HIDE */
 @media (min-width: 769px) {
   .bottom-cta {
