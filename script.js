@@ -25,41 +25,17 @@ document.querySelectorAll('.btn').forEach(button => {
   });
 });
 
-const bottomCounter = document.querySelector('.bottom-bar .count');
+const bottomCta = document.getElementById('bottomCta');
 
-const easeOut = t => 1 - Math.pow(1 - t, 3);
+window.addEventListener('scroll', () => {
+  const scrollTrigger = window.innerHeight * 0.6;
 
-const runCounter = (el, target, duration = 1200) => {
-  let startTime = null;
-
-  const animate = time => {
-    if (!startTime) startTime = time;
-    const progress = Math.min((time - startTime) / duration, 1);
-    el.textContent = Math.floor(easeOut(progress) * target);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      el.textContent = target + '+';
-    }
-  };
-
-  requestAnimationFrame(animate);
-};
-
-const reset = el => el.textContent = '0';
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      runCounter(entry.target, +entry.target.dataset.target);
-    } else {
-      reset(entry.target);
-    }
-  });
-}, { threshold: 0.9 });
-
-observer.observe(bottomCounter);
+  if (window.scrollY > scrollTrigger) {
+    bottomCta.classList.add('show');
+  } else {
+    bottomCta.classList.remove('show');
+  }
+});
 
 const counters = document.querySelectorAll('.count');
 
