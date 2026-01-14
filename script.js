@@ -128,4 +128,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
+  /* ==================================================
+     🔥 COUNTER ANIMATION (FIXED)
+  ================================================== */
+  const counters = document.querySelectorAll('.count');
+
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+  const animateCounter = (el, target, duration = 1400) => {
+    let startTime = null;
+
+    const animate = time => {
+      if (!startTime) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      const eased = easeOutCubic(progress);
+
+      el.textContent = Math.floor(eased * target);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        el.textContent = target + '+';
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
+  if (counters.length) {
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+
+        if (entry.isIntersecting) {
+          el.textContent = '0';
+          animateCounter(el, target);
+        } else {
+          el.textContent = '0';
+        }
+      });
+    }, { threshold: 0.6 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+  }
+
 });
