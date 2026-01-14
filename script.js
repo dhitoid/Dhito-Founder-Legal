@@ -12,3 +12,4 @@ const observer = new IntersectionObserver(
 );
 
 reveals.forEach(r => observer.observe(r));
+
