@@ -180,3 +180,31 @@ window.addEventListener('scroll', () => {
 
   lastScroll = currentScroll;
 });
+
+const testimonials = [
+  "Proses cepat & jelas",
+  "Tidak ribet & aman",
+  "Admin responsif",
+  "PT saya jadi cepat",
+  "Sesuai aturan & resmi"
+];
+
+let testimonialIndex = 0;
+const testimonialEl = document.getElementById('testimonialText');
+const testimonialBox = document.getElementById('miniTestimonial');
+
+function rotateTestimonial() {
+  testimonialBox.classList.add('fade-out');
+
+  setTimeout(() => {
+    testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+    testimonialEl.textContent = testimonials[testimonialIndex];
+
+    testimonialBox.classList.remove('fade-out');
+    testimonialBox.classList.add('fade-in');
+  }, 350);
+}
+
+// Interval aman (tidak mengganggu)
+setInterval(rotateTestimonial, 4000);
+
