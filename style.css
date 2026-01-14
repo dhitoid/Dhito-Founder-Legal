@@ -443,6 +443,96 @@ footer {
   color: var(--text-soft);
 }
 
+/* ==================================================
+   TRUST BADGE — iOS / APPLE STYLE
+================================================== */
+.trust {
+  padding: 36px 20px;
+}
+
+.trust-inner {
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 18px;
+}
+
+.trust-badge {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 20px 18px;
+  border: 1px solid var(--border-soft);
+  text-align: center;
+  transition: 
+    transform .45s cubic-bezier(.4,0,.2,1),
+    box-shadow .45s cubic-bezier(.4,0,.2,1);
+}
+
+/* shimmer */
+.trust-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,.6),
+    transparent 70%
+  );
+  transform: translateX(-100%);
+}
+
+.trust-badge.animate::before {
+  animation: shimmer 2.2s ease-in-out;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* icon */
+.trust-badge .icon {
+  width: 46px;
+  height: 46px;
+  margin: auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 10px;
+  animation: pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.trust-badge strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.trust-badge span {
+  font-size: .85rem;
+  color: var(--text-soft);
+}
+
+/* hover micro-interaction */
+.trust-badge:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(0,0,0,.12);
+}
+
 /* DESKTOP HIDE */
 @media (min-width: 769px) {
   .bottom-cta {
