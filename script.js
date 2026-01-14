@@ -3,22 +3,31 @@
 ================================================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ==================================================
-     REVEAL ON SCROLL
-  ================================================== */
-  const reveals = document.querySelectorAll('.reveal');
+/* ==================================================
+   REVEAL ON SCROLL (REPLAYABLE)
+================================================== */
+const reveals = document.querySelectorAll('.reveal');
 
-  if (reveals.length) {
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.15 });
+if (reveals.length) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const el = entry.target;
 
-    reveals.forEach(el => revealObserver.observe(el));
-  }
+      if (entry.isIntersecting) {
+        // Reset animation dulu
+        el.classList.remove('active');
+        void el.offsetWidth; // force reflow
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  reveals.forEach(el => revealObserver.observe(el));
+}
 
   /* ==================================================
      iOS RIPPLE (BTN + BOTTOM CTA)
