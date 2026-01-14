@@ -145,6 +145,29 @@ if (reveals.length) {
       }, 350);
     }, 4000);
   }
+  
+  /* ==================================================
+   SCROLL RESPONSIVE BACKGROUND
+================================================== */
+
+const prefersReducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+).matches;
+
+if (!prefersReducedMotion) {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = Math.min(scrollY / docHeight, 1);
+
+    // Gerakan pelan & organik
+    const bgX = 50 + progress * 20;
+    const bgY = progress * 60;
+
+    document.documentElement.style.setProperty('--bg-x', `${bgX}%`);
+    document.documentElement.style.setProperty('--bg-y', `${bgY}%`);
+  });
+}
 
   /* ==================================================
      COUNTER ANIMATION (%, +, REPEATABLE)
