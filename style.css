@@ -401,40 +401,45 @@ footer {
 }
 
 /* ==================================================
-   STATS / COUNTER — MODERN DIGITAL
+   STATS / COUNTER — iOS SMOOTH DIGITAL
 ================================================== */
 .stats {
   background: var(--bg-soft);
-  padding: 48px 20px;
+  padding: 44px 20px;
 }
 
 .stats-inner {
-  max-width: 1000px;
+  max-width: 960px;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 28px;
-  text-align: center;
+  gap: 24px;
 }
 
 .stat {
-  background: white;
-  padding: 28px 20px;
-  border-radius: var(--radius);
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 26px 20px;
+  text-align: center;
   border: 1px solid var(--border-soft);
   box-shadow: var(--shadow-xs);
 }
 
 .stat .count {
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   font-weight: 800;
-  color: var(--primary);
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #2563eb, #22c55e);
+  -webkit-background-clip: text;
+  color: transparent;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
 }
 
 .stat p {
-  font-size: .9rem;
+  font-size: .88rem;
   color: var(--text-soft);
 }
 
