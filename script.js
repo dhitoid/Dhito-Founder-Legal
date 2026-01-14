@@ -118,3 +118,38 @@ const trustObserver = new IntersectionObserver(entries => {
 });
 
 trustBadges.forEach(badge => trustObserver.observe(badge));
+
+const ctaMessages = [
+  {
+    title: "Konsultasi Gratis",
+    subtitle: "Respon cepat via WhatsApp"
+  },
+  {
+    title: "Sudah 100+ Klien",
+    subtitle: "Dipercaya pelaku usaha"
+  },
+  {
+    title: "Butuh Legalitas?",
+    subtitle: "Kami bantu sampai selesai"
+  }
+];
+
+let ctaIndex = 0;
+const ctaTitle = document.getElementById('ctaTitle');
+const ctaSubtitle = document.getElementById('ctaSubtitle');
+const ctaBox = document.querySelector('.bottom-cta-text');
+
+function rotateCTA() {
+  ctaBox.classList.add('fade-out');
+
+  setTimeout(() => {
+    ctaIndex = (ctaIndex + 1) % ctaMessages.length;
+    ctaTitle.textContent = ctaMessages[ctaIndex].title;
+    ctaSubtitle.textContent = ctaMessages[ctaIndex].subtitle;
+
+    ctaBox.classList.remove('fade-out');
+    ctaBox.classList.add('fade-in');
+  }, 350);
+}
+
+setInterval(rotateCTA, 4500);
