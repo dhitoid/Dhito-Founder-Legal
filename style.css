@@ -400,6 +400,44 @@ footer {
   box-shadow: var(--shadow-sm);
 }
 
+/* ==================================================
+   STATS / COUNTER — MODERN DIGITAL
+================================================== */
+.stats {
+  background: var(--bg-soft);
+  padding: 48px 20px;
+}
+
+.stats-inner {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 28px;
+  text-align: center;
+}
+
+.stat {
+  background: white;
+  padding: 28px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-xs);
+}
+
+.stat .count {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stat p {
+  font-size: .9rem;
+  color: var(--text-soft);
+}
+
 /* DESKTOP HIDE */
 @media (min-width: 769px) {
   .bottom-cta {
