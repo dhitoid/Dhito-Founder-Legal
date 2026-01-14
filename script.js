@@ -1,210 +1,131 @@
-const reveal = document.querySelectorAll('.reveal');
+/* ==================================================
+   SAFE DOM READY
+================================================== */
+document.addEventListener('DOMContentLoaded', () => {
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
-}, { threshold: 0.15 });
+  /* ==================================================
+     REVEAL ON SCROLL
+  ================================================== */
+  const reveals = document.querySelectorAll('.reveal');
 
-reveal.forEach(el => observer.observe(el));
+  if (reveals.length) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
 
-document.querySelectorAll('.btn').forEach(button => {
-  button.addEventListener('click', function (e) {
+    reveals.forEach(el => revealObserver.observe(el));
+  }
+
+  /* ==================================================
+     iOS RIPPLE (BTN + BOTTOM CTA)
+  ================================================== */
+  document.addEventListener('click', e => {
+    const target = e.target.closest('.btn, .bottom-cta-btn');
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
     const ripple = document.createElement('span');
-    ripple.classList.add('ripple');
 
-    const rect = this.getBoundingClientRect();
-    ripple.style.left = `${e.clientX - rect.left}px`;
-    ripple.style.top = `${e.clientY - rect.top}px`;
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height =
+      Math.max(rect.width, rect.height) + 'px';
 
-    this.appendChild(ripple);
+    ripple.style.left = e.clientX - rect.left - rect.width / 2 + 'px';
+    ripple.style.top  = e.clientY - rect.top  - rect.height / 2 + 'px';
 
+    target.appendChild(ripple);
     setTimeout(() => ripple.remove(), 600);
   });
-});
 
-const bottomCta = document.getElementById('bottomCta');
+  /* ==================================================
+     AUTO HIDE / SHOW BOTTOM CTA
+  ================================================== */
+  const bottomCta = document.getElementById('bottomCta');
+  let lastScroll = 0;
+  const showAfter = 200;
 
-window.addEventListener('scroll', () => {
-  const scrollTrigger = window.innerHeight * 0.6;
+  if (bottomCta) {
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
 
-  if (window.scrollY > scrollTrigger) {
-    bottomCta.classList.add('show');
-  } else {
-    bottomCta.classList.remove('show');
-  }
-});
+      if (currentScroll < showAfter) {
+        bottomCta.classList.remove('show');
+        lastScroll = currentScroll;
+        return;
+      }
 
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.bottom-cta-btn');
-  if (!btn) return;
+      if (currentScroll > lastScroll + 10) {
+        bottomCta.classList.add('show');
+      } else if (currentScroll < lastScroll - 10) {
+        bottomCta.classList.remove('show');
+      }
 
-  const rect = btn.getBoundingClientRect();
-  const ripple = document.createElement('span');
-
-  ripple.className = 'ripple';
-  ripple.style.width = ripple.style.height =
-    Math.max(rect.width, rect.height) + 'px';
-
-  ripple.style.left = e.clientX - rect.left - rect.width / 2 + 'px';
-  ripple.style.top  = e.clientY - rect.top  - rect.height / 2 + 'px';
-
-  btn.appendChild(ripple);
-
-  setTimeout(() => ripple.remove(), 600);
-});
-
-
-const counters = document.querySelectorAll('.count');
-
-const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
-
-const animateCounter = (el, target, duration = 1400) => {
-  let start = 0;
-  let startTime = null;
-
-  const animate = time => {
-    if (!startTime) startTime = time;
-    const progress = Math.min((time - startTime) / duration, 1);
-    const eased = easeOutCubic(progress);
-
-    el.textContent = Math.floor(eased * target);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      el.textContent = target + '+';
-    }
-  };
-
-  requestAnimationFrame(animate);
-};
-
-const resetCounter = el => {
-  el.textContent = '0';
-};
-
-const counterObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const counter = entry.target;
-    const target = +counter.dataset.target;
-
-    if (entry.isIntersecting) {
-      animateCounter(counter, target);
-    } else {
-      resetCounter(counter);
-    }
-  });
-}, {
-  threshold: 0.6
-});
-
-counters.forEach(counter => counterObserver.observe(counter));
-
-const trustBadges = document.querySelectorAll('.trust-badge');
-
-const trustObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('animate');
-    } else {
-      entry.target.classList.remove('animate');
-    }
-  });
-}, {
-  threshold: 0.6
-});
-
-trustBadges.forEach(badge => trustObserver.observe(badge));
-
-const ctaMessages = [
-  {
-    title: "Konsultasi Gratis",
-    subtitle: "Respon cepat via WhatsApp"
-  },
-  {
-    title: "Sudah 100+ Klien",
-    subtitle: "Dipercaya pelaku usaha"
-  },
-  {
-    title: "Butuh Legalitas?",
-    subtitle: "Kami bantu sampai selesai"
-  }
-];
-
-let ctaIndex = 0;
-const ctaTitle = document.getElementById('ctaTitle');
-const ctaSubtitle = document.getElementById('ctaSubtitle');
-const ctaBox = document.querySelector('.bottom-cta-text');
-
-function rotateCTA() {
-  ctaBox.classList.add('fade-out');
-
-  setTimeout(() => {
-    ctaIndex = (ctaIndex + 1) % ctaMessages.length;
-    ctaTitle.textContent = ctaMessages[ctaIndex].title;
-    ctaSubtitle.textContent = ctaMessages[ctaIndex].subtitle;
-
-    ctaBox.classList.remove('fade-out');
-    ctaBox.classList.add('fade-in');
-  }, 350);
-}
-
-setInterval(rotateCTA, 4500);
-
-const bottomCta = document.getElementById('bottomCta');
-let lastScroll = 0;
-const showAfter = 200; // px setelah hero
-
-window.addEventListener('scroll', () => {
-  const currentScroll = window.scrollY;
-
-  // Jangan tampil di atas / hero
-  if (currentScroll < showAfter) {
-    bottomCta.classList.remove('show');
-    lastScroll = currentScroll;
-    return;
+      lastScroll = currentScroll;
+    });
   }
 
-  // Scroll ke bawah → tampil
-  if (currentScroll > lastScroll + 10) {
-    bottomCta.classList.add('show');
+  /* ==================================================
+     DYNAMIC CTA TEXT
+  ================================================== */
+  const ctaTitle = document.getElementById('ctaTitle');
+  const ctaSubtitle = document.getElementById('ctaSubtitle');
+  const ctaBox = document.querySelector('.bottom-cta-text');
+
+  const ctaMessages = [
+    { title: "Konsultasi Gratis", subtitle: "Respon cepat via WhatsApp" },
+    { title: "Sudah 100+ Klien", subtitle: "Dipercaya pelaku usaha" },
+    { title: "Butuh Legalitas?", subtitle: "Kami bantu sampai selesai" }
+  ];
+
+  if (ctaTitle && ctaSubtitle && ctaBox) {
+    let ctaIndex = 0;
+
+    setInterval(() => {
+      ctaBox.classList.add('fade-out');
+
+      setTimeout(() => {
+        ctaIndex = (ctaIndex + 1) % ctaMessages.length;
+        ctaTitle.textContent = ctaMessages[ctaIndex].title;
+        ctaSubtitle.textContent = ctaMessages[ctaIndex].subtitle;
+
+        ctaBox.classList.remove('fade-out');
+        ctaBox.classList.add('fade-in');
+      }, 350);
+    }, 4500);
   }
 
-  // Scroll ke atas → sembunyi
-  if (currentScroll < lastScroll - 10) {
-    bottomCta.classList.remove('show');
+  /* ==================================================
+     MINI TESTIMONIAL ROTATOR
+  ================================================== */
+  const testimonialBox = document.getElementById('miniTestimonial');
+  const testimonialText = document.getElementById('testimonialText');
+
+  const testimonials = [
+    "Proses cepat & jelas",
+    "Tidak ribet & aman",
+    "Admin responsif",
+    "PT saya jadi cepat",
+    "Sesuai aturan & resmi"
+  ];
+
+  if (testimonialBox && testimonialText) {
+    let testimonialIndex = 0;
+
+    setInterval(() => {
+      testimonialBox.classList.add('fade-out');
+
+      setTimeout(() => {
+        testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+        testimonialText.textContent = testimonials[testimonialIndex];
+
+        testimonialBox.classList.remove('fade-out');
+        testimonialBox.classList.add('fade-in');
+      }, 350);
+    }, 4000);
   }
 
-  lastScroll = currentScroll;
 });
-
-const testimonials = [
-  "Proses cepat & jelas",
-  "Tidak ribet & aman",
-  "Admin responsif",
-  "PT saya jadi cepat",
-  "Sesuai aturan & resmi"
-];
-
-let testimonialIndex = 0;
-const testimonialEl = document.getElementById('testimonialText');
-const testimonialBox = document.getElementById('miniTestimonial');
-
-function rotateTestimonial() {
-  testimonialBox.classList.add('fade-out');
-
-  setTimeout(() => {
-    testimonialIndex = (testimonialIndex + 1) % testimonials.length;
-    testimonialEl.textContent = testimonials[testimonialIndex];
-
-    testimonialBox.classList.remove('fade-out');
-    testimonialBox.classList.add('fade-in');
-  }, 350);
-}
-
-// Interval aman (tidak mengganggu)
-setInterval(rotateTestimonial, 4000);
-
